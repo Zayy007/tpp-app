@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SutdentController;
 use Illuminate\Support\Facades\Route;
 
@@ -65,3 +66,6 @@ Route::get('/', function(){
 
 Route::get('/students', [SutdentController::class, 'index']);
 
+Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
+Route::get('/categories/edit', [CategoryController::class, 'edit'])->name('categories.edit');
