@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
-    <div>
+    <div class="container">
         <h1 class="mb-4 text-danger">Categories List</h1>
         <a href="{{ route('categories.create') }}" class="btn btn-outline-success">
             + Create
         </a>
-        <table class="table table-bordered">
+        <table class="table table-bordered mt-4">
             <thead>
                 <tr>
                     <th class="bg-primary text-white" scope="col">#ID</th>
@@ -26,8 +26,12 @@
                     <tr>
                         <th>{{$data['id']}}</th>
                         <th>{{$data['name']}}</th>
-                        <th>
-                            <a href="{{ route('categories.edit') }}" class="btn btn-outline-secondary">Edit</a>
+                        <th class="d-flex">
+                            <a href="{{ route('categories.edit', ['id' => $data->id]) }}" class="btn btn-outline-secondary me-2">Edit</a>
+                            <form action="{{ route('categories.delete', $data->id) }}" method="POST">
+                                @csrf
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
                         </th>
                     </tr>
                 @endforeach
