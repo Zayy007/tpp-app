@@ -13,7 +13,6 @@ class ProductController extends Controller
         $product = Product::all();
 
         return view('products.index', compact('product'));
-
     }
 
     public function create()
@@ -21,22 +20,27 @@ class ProductController extends Controller
         return view('products.create');
     }
 
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string',
-            'description' => 'required|string',
-            'price' => 'required|integer',
-            'status' => 'nullable',
+        // $validatedData = $request->validate([
+        //     'name' => 'required|string',
+        //     'description' => 'required|string',
+        //     'price' => 'required|integer',
+        //     'status' => 'nullable',
+        // ]);
+
+        // $validatedData['status'] = $request->has('status') ? true : false;
+
+        // Product::create($validatedData);
+
+        $request->validated();
+
+        Product::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'status' => $request->status == 'on' ? true : false,
         ]);
-
-        $validatedData['status'] = $request->has('status') ? true : false;
-
-        Product::create($validatedData);
-
-        // $data = $request->validated();
-
-        // Product::create($data);
 
 
         return redirect()->route('products.index');
@@ -51,7 +55,6 @@ class ProductController extends Controller
 
     public function update(Request $request)
     {
-        // dd($request);
         $product = Product::where('id', $request->id)->first();
 
         $product->update([
@@ -67,11 +70,9 @@ class ProductController extends Controller
     public function delete($id)
     {
         $product = Product::where('id', $id)->first();
-        // dd($product);
 
         $product->delete();
 
         return redirect()->route('products.index');
-
     }
 }

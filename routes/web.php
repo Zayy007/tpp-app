@@ -65,8 +65,10 @@ Route::get('/', function(){
     return view('index');
 });
 
+// Student
 Route::get('/students', [SutdentController::class, 'index']);
 
+// Category
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 
 Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
@@ -77,6 +79,8 @@ Route::post('/categories/{id}/update', [CategoryController::class, 'update'])->n
 
 Route::post('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.delete');
 
+
+// Poduct
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
 Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
