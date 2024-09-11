@@ -33,15 +33,11 @@ class ProductController extends Controller
 
         // Product::create($validatedData);
 
-        $request->validated();
+        $data = $request->validated();
 
-        Product::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'status' => $request->status == 'on' ? true : false,
-        ]);
+        $data['status'] = $request->has('status') ? true : false;
 
+        Product::create($data);
 
         return redirect()->route('products.index');
     }
