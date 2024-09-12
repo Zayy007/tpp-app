@@ -24,7 +24,7 @@
             <div class="card-header">
                 Create Product
             </div>
-            <form action="{{ route('products.store') }}" method="POST">
+            <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
                     <label for="name" class="form-label">Name :</label>
@@ -40,6 +40,10 @@
                     <label for="price" class="form-label">Price :</label>
                     <input type="text" name="price" class="form-control card-body"
                         placeholder="Enter Product Price" />
+                </div>
+                <div class="card-body">
+                    <label for="image" class="form-label">IMAGE :</label>
+                    <input type="file" name="image" class="form-control" id="image"/>
                 </div>
                 <div class="card-body">
                     <div class="form-check form-switch">

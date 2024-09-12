@@ -31,7 +31,10 @@
                     <input type="text" name="price" class="form-control card-body"
                         placeholder="Enter Product Price" value="{{ $product->price }}" />
                 </div>
-
+                <div class="card-body">
+                    <label for="image" class="form-label">Image :</label>
+                    <img src="{{ asset('/productImages/' . $product->image) }}" alt="{{ $product->image }}" style="width: 70px; height:70px" />
+                </div>
                 <div class="card-body">
                     <div class="form-check form-switch">
                         <label for="status" class="form-check-label">Active Or Inactive</label>

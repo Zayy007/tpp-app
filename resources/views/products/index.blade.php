@@ -24,6 +24,7 @@
                 <th class="bg-primary text-white" scope="col">NAME</th>
                 <th class="bg-primary text-white" scope="col">DESCRIPTION</th>
                 <th class="bg-primary text-white" scope="col">PRICE</th>
+                <th class="bg-primary text-white" scope="col">IMAGE</th>
                 <th class="bg-primary text-white" scope="col">STATUS</th>
                 <th class="bg-primary text-white" scope="col">ACTION</th>
             </thead>
@@ -34,6 +35,10 @@
                         <th>{{ $data['name'] }}</th>
                         <th>{{ $data['description'] }}</th>
                         <th>{{ $data['price'] }}</th>
+                        <th>
+                            <img src="{{ asset('productImages/' . $data->image) }}" alt="{{ $data->image }}" style="width: 70px; height:70px"/>
+                            {{-- <img src="{{ asset('storage/productImages/' . $data->image) }}" alt="{{ $data->image }}" style="width: 70px; height:70px" /> --}}
+                        </th>
                         <th>
                             @if ($data->status === 1)
                                 <span class="text-success">Active</span>

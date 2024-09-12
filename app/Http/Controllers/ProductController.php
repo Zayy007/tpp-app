@@ -22,21 +22,20 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
-        // $validatedData = $request->validate([
-        //     'name' => 'required|string',
-        //     'description' => 'required|string',
-        //     'price' => 'required|integer',
-        //     'status' => 'nullable',
-        // ]);
-
-        // $validatedData['status'] = $request->has('status') ? true : false;
-
-        // Product::create($validatedData);
-
+        // dd($request->hasFile('image'));
         $data = $request->validated();
 
         $data['status'] = $request->has('status') ? true : false;
 
+        if($request->hasFile('image'))
+        {
+            $imageName = time() . '.' . $request->image->extension();
+
+            $request->image->move(public_path('productImages'), $imageName);
+            // $request->image->storeAs('productImages/', $imageName);
+
+            $data = array_merge($data, ['image' => $imageName]);
+        }
         Product::create($data);
 
         return redirect()->route('products.index');
