@@ -22,7 +22,6 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
-        // dd($request->hasFile('image'));
         $data = $request->validated();
 
         $data['status'] = $request->has('status') ? true : false;
