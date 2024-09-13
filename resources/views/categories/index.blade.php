@@ -28,10 +28,10 @@
                         <th>{{$data['name']}}</th>
                         <th class="d-flex">
                             <a href="{{ route('categories.edit', ['id' => $data->id]) }}" class="btn btn-outline-secondary me-2">Edit</a>
-                            <form action="{{ route('categories.delete', $data->id) }}" method="POST">
+                            {{-- <form action="{{ route('categories.delete', $data->id) }}" method="POST">
                                 @csrf
                                 <button class="btn btn-danger">Delete</button>
-                            </form>
+                            </form> --}}
                         </th>
                     </tr>
                 @endforeach
