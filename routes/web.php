@@ -16,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 
 
 // Static Route
@@ -61,9 +61,9 @@ Route::prefix('dashboard')->group(function(){
 
 // Laravel View
 
-Route::get('/', function(){
-    return view('index');
-});
+// Route::get('/', function(){
+//     return view('index');
+// });
 
 // Student
 Route::get('/students', [SutdentController::class, 'index']);
