@@ -10,7 +10,7 @@ class ProductRepository implements ProductRepositoryInterface
 {
     public function index()
     {
-        $product = Product::all();
+        $product = Product::with('category')->get();
 
         return $product;
     }

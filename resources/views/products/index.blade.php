@@ -15,6 +15,7 @@
                 <th class="bg-primary text-white" scope="col">PRICE</th>
                 <th class="bg-primary text-white" scope="col">IMAGE</th>
                 <th class="bg-primary text-white" scope="col">STATUS</th>
+                <th class="bg-primary text-white" scope="col">CATEGORY</th>
                 <th class="bg-primary text-white" scope="col">ACTION</th>
             </thead>
             <tbody>
@@ -27,7 +28,6 @@
                         <th>
                             <img src="{{ asset('productImages/' . $data->image) }}" alt="{{ $data->image }}"
                                 style="width: 70px; height:70px" />
-                            {{-- <img src="{{ asset('storage/productImages/' . $data->image) }}" alt="{{ $data->image }}" style="width: 70px; height:70px" /> --}}
                         </th>
                         <th>
                             @if ($data->status === 1)
@@ -35,6 +35,9 @@
                             @else
                                 <span class="text-danger">Suspend</span>
                             @endif
+                        </th>
+                        <th>
+                            {{ $data['category']['name'] }}
                         </th>
                         <th class="d-flex">
                             <a href="{{ route('products.edit', ['id' => $data->id]) }}"

@@ -39,6 +39,14 @@
                         <input class="form-check-input" name="status" type="checkbox" role="switch" checked />
                     </div>
                 </div>
+                <div class="card-body">
+                    <label for="category" class="form-label">Category</label>
+                    <select name="category_id" id="category_id" class="form-select">
+                        @foreach ($category as $data)
+                        <option value="{{ $data->id }}">{{ $data->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <div class="card-footer">
                     <button class="btn btn-primary" type="submit">+ Create</button>
                     <a href="{{ route('products.index') }}" class="btn btn-secondary">Back</a>

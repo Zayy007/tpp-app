@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Models\Category;
 use App\Models\Product;
 use App\Repositories\Product\ProductRepositoryInterface;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ class ProductController extends Controller
     public function __construct(ProductRepositoryInterface $productRepository)
     {
         $this->middleware('auth');
+
         $this->productRepository = $productRepository;
     }
 
@@ -26,7 +28,9 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('products.create');
+        $category = Category::all();
+
+        return view('products.create', compact('category'));
     }
 
     public function store(ProductRequest $request)
@@ -35,8 +39,7 @@ class ProductController extends Controller
 
         $data['status'] = $request->has('status') ? true : false;
 
-        if($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')) {
             $imageName = time() . '.' . $request->image->extension();
 
             $request->image->move(public_path('productImages'), $imageName);
