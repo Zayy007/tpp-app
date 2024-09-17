@@ -3,20 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
-use App\Models\Category;
-use App\Models\Product;
+use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     private ProductRepositoryInterface $productRepository;
+    private CategoryRepositoryInterface $categoryRepository;
 
-    public function __construct(ProductRepositoryInterface $productRepository)
+    public function __construct(ProductRepositoryInterface $productRepository, CategoryRepositoryInterface $categoryRepository)
     {
         $this->middleware('auth');
 
         $this->productRepository = $productRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     public function index()
@@ -28,7 +29,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        $category = Category::all();
+        $category = $this->categoryRepository->index();
 
         return view('products.create', compact('category'));
     }
@@ -43,11 +44,11 @@ class ProductController extends Controller
             $imageName = time() . '.' . $request->image->extension();
 
             $request->image->move(public_path('productImages'), $imageName);
-            // $request->image->storeAs('productImages/', $imageName);
 
             $data = array_merge($data, ['image' => $imageName]);
         }
-        Product::create($data);
+
+        $this->productRepository->store($data);
 
         return redirect()->route('products.index');
     }

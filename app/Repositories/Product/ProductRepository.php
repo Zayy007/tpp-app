@@ -21,5 +21,10 @@ class ProductRepository implements ProductRepositoryInterface
 
         return $product;
     }
+
+    public function store($data)
+    {
+        return Product::create($data);
+    }
 }
 
