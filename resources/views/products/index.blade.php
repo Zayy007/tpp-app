@@ -4,9 +4,11 @@
         <h4 class="m-4">
             Product List
         </h4>
-        <a href="{{ route('products.create') }}" class="btn btn-outline-success mb-4">
-            + Create
-        </a>
+        @can('productCreate')
+            <a href="{{ route('products.create') }}" class="btn btn-outline-success mb-4">
+                + Create
+            </a>
+        @endcan
         <table class="table table-bordered">
             <thead>
                 <th class="bg-primary text-white" scope="col">ID</th>

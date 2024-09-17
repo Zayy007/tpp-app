@@ -18,26 +18,31 @@ class ProductSeeder extends Seeder
                 'name' => 'Camera',
                 'description' => "This is camera!",
                 'price' => 10000,
+                'category_id' => 1,
             ],
             [
                 'name' => 'Shoe',
                 'description' => "This is shoe!",
                 'price' => 10000,
+                'category_id' => 1,
             ],
             [
                 'name' => 'Shirt',
                 'description' => "This is shirt!",
                 'price' => 10000,
+                'category_id' => 1,
             ],
             [
                 'name' => 'Bag',
                 'description' => "This is bag!",
                 'price' => 10000,
+                'category_id' => 1,
             ],
             [
                 'name' => 'Running Shoes',
                 'description' => "This is running shoes!",
                 'price' => 10000,
+                'category_id' => 1,
             ],
         ];
 

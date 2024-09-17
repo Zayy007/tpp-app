@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->integer('price');
             $table->boolean('status')->default(true)->nullable();
+            $table->foreignId('category_id')->nullable();
             $table->timestamps();
         });
     }
