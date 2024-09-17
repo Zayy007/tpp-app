@@ -49,7 +49,7 @@ Route::post('/products/store', [ProductController::class, 'store'])->name('produ
 Route::get('/products/{id}', [ProductController::class, 'edit'])->name('products.edit');
 Route::post('/products/{id}/update', [ProductController::class, 'update'])->name('products.update');
 
-Route::post('/categories/{id}', [ProductController::class, 'delete'])->name('products.delete');
+Route::post('/products/{id}', [ProductController::class, 'delete'])->name('products.delete');
 
 Auth::routes(['register' => false]);
 

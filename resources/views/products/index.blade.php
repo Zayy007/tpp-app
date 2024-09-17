@@ -42,12 +42,16 @@
                             {{ $data['category']['name'] }}
                         </th>
                         <th class="d-flex">
-                            <a href="{{ route('products.edit', ['id' => $data->id]) }}"
-                                class="btn btn-outline-secondary me-2">Edit</a>
-                            <form action="{{ route('products.delete', $data->id) }}" method="POST">
-                                @csrf
-                                <button class="btn btn-danger">Delete</button>
-                            </form>
+                            @can('productEdit')
+                                <a href="{{ route('products.edit', ['id' => $data->id]) }}"
+                                    class="btn btn-outline-secondary me-2">Edit</a>
+                            @endcan
+                            @can('productDelete')
+                                <form action="{{ route('products.delete', $data->id) }}" method="POST">
+                                    @csrf
+                                    <button class="btn btn-danger">Delete</button>
+                                </form>
+                            @endcan
                         </th>
 
                     </tr>
