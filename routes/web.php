@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SutdentController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,9 @@ Route::get('/products/{id}', [ProductController::class, 'edit'])->name('products
 Route::post('/products/{id}/update', [ProductController::class, 'update'])->name('products.update');
 
 Route::post('/products/{id}', [ProductController::class, 'delete'])->name('products.delete');
+
+// User
+Route::resource('/users', UserController::class);
 
 Auth::routes(['register' => false]);
 
