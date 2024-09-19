@@ -27,6 +27,15 @@
                         <label for="password_confirmation">Confirm Password</label>
                         <input type="text" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="Enter Password Confirmation"/>
                     </div>
+
+                    <div class="form-group">
+                        <label for="role">Roles</label>
+                        <select name="roles[]" id="" class="form-select select">
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-primary" type="submit">+ Create</button>

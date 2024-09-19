@@ -24,7 +24,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create',);
+        $roles = Role::all();
+
+        return view('users.create', compact('roles'));
     }
 
     /**
@@ -37,13 +39,17 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|unique:users,email',
             'password' => 'required|confirmed',
+            'roles' => 'required',
+            'roles.*' => 'exists:roles,id',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $user->roles()->sync($data['roles']);
 
         return redirect()->route('users.index');
     }
@@ -61,7 +67,11 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::where('id', $id)->first();
+
+        $roles = Role::all();
+
+        return view('users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -69,7 +79,17 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // dd($request->all());
+        $user = User::where('id', $id)->first();
+
+        $user->update([
+            'name' => $request->name,
+            'emai' => $request->email,
+        ]);
+
+        $user->roles()->sync($request['roles']);
+
+        return redirect()->route('users.index');
     }
 
     /**
@@ -77,6 +97,10 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::where('id', $id)->first();
+
+        $user->delete();
+
+        return redirect()->route('users.index');
     }
 }
