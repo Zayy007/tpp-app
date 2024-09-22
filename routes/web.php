@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SutdentController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -54,6 +56,10 @@ Route::post('/products/{id}', [ProductController::class, 'delete'])->name('produ
 
 // User
 Route::resource('/users', UserController::class);
+
+Route::resource('/roles', RoleController::class);
+
+Route::resource('/permissions', PermissionController::class);
 
 Auth::routes(['register' => false]);
 
