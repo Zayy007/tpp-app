@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\API\BaseController;
+use App\Http\Resources\CategoryResource;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,7 +25,9 @@ class CategoryController extends BaseController
     {
         $data = $this->categoryRepository->index();
 
-        return $this->success($data, 'Categories Retrieved Successfully', 200);
+        $result = CategoryResource::collection($data);
+
+        return $this->success($result, 'Categories Retrieved Successfully', 200);
     }
 
     /**
@@ -33,15 +36,22 @@ class CategoryController extends BaseController
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string'
+            'name' => 'required|string',
+            'image' => 'required|image'
         ]);
 
         if ($validator->fails()) {
             return $this->error('Validation Error', $validator->errors(), 422);
         }
 
+        if($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('categoryImages'), $imageName);
+        }
+
         $category = Category::create([
             'name' => $request->name,
+            'image' => $imageName,
         ]);
 
         return $this->success($category, 'Category Created Successfully', 201);
@@ -57,8 +67,9 @@ class CategoryController extends BaseController
         if (!$data) {
             return $this->error('Category Not Found!', null, 404);
         }
+        $result = new CategoryResource($data);
 
-        return $this->success($data, 'Category Show Successfully', 200);
+        return $this->success($result, 'Category Show Successfully', 200);
     }
 
     /**
