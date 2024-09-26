@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class AuthService
 {
-    public function login(Request $request)
+    public function login($email)
     {
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $email)->first();
 
         $user['token'] = $user->createToken('API')->plainTextToken;
 

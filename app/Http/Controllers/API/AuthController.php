@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\API\BaseController;
+use App\Http\Requests\LoginRequest;
 use App\Http\Resources\LoginResource;
 use App\Services\AuthService;
 
@@ -23,24 +24,16 @@ class AuthController extends BaseController
     }
 
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         try {
-            $validateUser = Validator::make($request->all(), [
-                'email' => 'required|email',
-                'password' => 'required',
-            ]);
+            $creditals = $request->only(['email', 'password']);
 
-            if ($validateUser->fails()) {
-                return $this->error('Validation Error!', $validateUser->errors());
-            }
-
-            if (!Auth::attempt($request->only(['email', 'password']))) {
-
+            if (!Auth::attempt($creditals)) {
                 return $this->error("Your Email & Password doesn't match!", null, 401);
             }
 
-            $user = $this->authService->login($request);
+            $user = $this->authService->login($creditals['email']);
 
             $result = new LoginResource($user);
 
