@@ -40,7 +40,7 @@ class AuthController extends BaseController
             return $this->success($result, "User Logged In Successfully!", 200);
         } catch (Exception $e) {
 
-            return $this->error(`Something went wrong!`, null, 500);
+            return $this->error($e->getMessage() ? $e->getMessage() : "Someting went wrong!", null, $e->getCode() ? $e->getCode() : 500);
         }
     }
 
