@@ -2,16 +2,27 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
 use Exception;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\API\BaseController;
+use App\Http\Resources\LoginResource;
+use App\Services\AuthService;
 
-class AuthController extends Controller
+class AuthController extends BaseController
 {
+    private AuthService $authService;
+
+    public function __construct(AuthService $authService)
+    {
+        $this->authService = $authService;
+    }
+
+
     public function login(Request $request)
     {
         try {
@@ -21,32 +32,22 @@ class AuthController extends Controller
             ]);
 
             if ($validateUser->fails()) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Validation Error!',
-                    'errors' => $validateUser->errors(),
-                ], 401);
+                return $this->error('Validation Error!', $validateUser->errors());
             }
 
             if (!Auth::attempt($request->only(['email', 'password']))) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Your Email & Password does not match!',
-                ], 401);
+
+                return $this->error("Your Email & Password doesn't match!", null, 401);
             }
 
-            $user = User::where('email', $request->email)->first();
+            $user = $this->authService->login($request);
 
-            return response()->json([
-                'status' => true,
-                'message' => 'User Logged In Successfully!',
-                'token' => $user->createToken('api')->plainTextToken,
-            ], 200);
+            $result = new LoginResource($user);
+
+            return $this->success($result, "User Logged In Successfully!", 200);
         } catch (Exception $e) {
-            return response()->json([
-                'status' => false,
-                'message' => $e->getMessage(),
-            ], 500);
+
+            return $this->error(`Something went wrong!`, null, 500);
         }
     }
 
